@@ -1,5 +1,5 @@
 source('plot_utils.R')
-source("metropolis.R")
+devtools::install_github("irenecrsn/gmat", ref = "rchol")
 
 N <- 5000; h <- 1000; p <- 1000;
 
