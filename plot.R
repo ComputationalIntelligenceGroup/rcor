@@ -1,5 +1,5 @@
 source('plot_utils.R')
-devtools::install_github("irenecrsn/gmat", ref = "rchol")
+devtools::install_github("irenecrsn/gmat")
 
 N <- 5000; h <- 1000; p <- 1000;
 
