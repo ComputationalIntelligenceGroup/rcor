@@ -72,7 +72,7 @@ plot_acceptance_k <- function(N, p, i, eps, h) {
   			 width = 7, height = 5)
 }
 
-#### plotting acceptance ratio vs i
+#### plotting acceptance ratio vs eps
 plot_acceptance_eps <- function(N, p, i, eps, h) {
 
 	ars <- array(dim = c(length(i), length(eps)), dimnames = list(i = i, eps = eps))
