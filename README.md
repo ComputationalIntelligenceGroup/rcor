@@ -34,7 +34,7 @@ Hyperspherical parameterization of the Cholesky factor, Statistics &
 Probability Letters, 106:5-12, 2015.
 
 This and more information on the `gmat` package can be found on [its
-repository](https://github.com/irenecrsn/gmat) at the `dev` branch.
+repository](https://github.com/irenecrsn/gmat) at the `rchol` branch.
 
 The `CRAN` package `clusterGeneration` is also necessary for executing the vine
 and onion methods described by Lewandowski et al. (2009):
