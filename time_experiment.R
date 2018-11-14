@@ -1,5 +1,4 @@
-source("metropolis.R")
-library("clusterGeneration")
+#devtools::install_github("irenecrsn/gmat", ref = "rchol")
 
 dir.create("res", showWarnings = FALSE)
 N <- 5000 
@@ -10,7 +9,7 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-    invisible(rCholUnif(N = N , p = p))
+    invisible(gmat::rgbn_chol(N = N , p = p))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
@@ -27,7 +26,7 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-    invisible(rPolarUnif(N = N , p = p))
+    invisible(gmat::rgbn_polar(N = N , p = p))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
@@ -43,7 +42,7 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-	invisible(sapply(1:N, genPositiveDefMat, dim = p, covMethod = "onion", rangeVar = c(1,1)))
+	invisible(sapply(1:N, clusterGeneration::genPositiveDefMat, dim = p, covMethod = "onion", rangeVar = c(1,1)))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
@@ -60,7 +59,7 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-	invisible(sapply(1:N, genPositiveDefMat, dim = p, covMethod = "c-vine", rangeVar = c(1,1)))
+	invisible(sapply(1:N, clusterGeneration::genPositiveDefMat, dim = p, covMethod = "c-vine", rangeVar = c(1,1)))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
