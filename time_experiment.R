@@ -1,4 +1,4 @@
-#devtools::install_github("irenecrsn/gmat", ref = "rchol")
+devtools::install_github("irenecrsn/gmat", ref = "rchol")
 
 dir.create("res", showWarnings = FALSE)
 N <- 5000 

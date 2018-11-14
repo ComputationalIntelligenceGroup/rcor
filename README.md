@@ -17,7 +17,7 @@ Computer Science, vol 11314, pp. 117-124, 2018.
   algorithm, as well as the results of the time experiment.
 
 ## R packages required
-These scripts rely on the development branch `rchol` of the
+- These scripts rely on the development branch `rchol` of the
 `R` package `gmat`, which can be installed with the `devtools`
 package from CRAN as follows
 
@@ -36,11 +36,14 @@ Probability Letters, 106:5-12, 2015.
 This and more information on the `gmat` package can be found on [its
 repository](https://github.com/irenecrsn/gmat) at the `rchol` branch.
 
-The `CRAN` package `clusterGeneration` is also necessary for executing the vine
+- The `CRAN` package `clusterGeneration` is also necessary for executing the vine
 and onion methods described by Lewandowski et al. (2009):
 
 > Lewandowski, D., Kurowicka, D., Joe, H. Generating random correlation matrices based on vines and extended onion method,
 Journal of Multivariate Analysis, 100:9, pp. 1989-2001, 2009.
+
+- For plotting the graphics, it is necessary to have installed the `CRAN`
+  packages `reshape2` and `ggplot2`.
 
 ## Usage
 
