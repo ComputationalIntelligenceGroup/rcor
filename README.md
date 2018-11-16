@@ -4,9 +4,8 @@ This repository contains the files for replicating the experiments described in
 the paper
 
 > Córdoba I., Varando G., Bielza C., Larrañaga P. A fast
-Metropolis-Hastings method for generating random correlation matrices. Intelligent Data
-Engineering and Automated Learning – IDEAL 2018. Lecture Notes in
-Computer Science, vol 11314, pp. 117-124, 2018. 
+Metropolis-Hastings method for generating random correlation matrices. Lecture Notes in
+Computer Science (IDEAL 2018), vol 11314, pp. 117-124, 2018. 
 
 ## Contents
 
