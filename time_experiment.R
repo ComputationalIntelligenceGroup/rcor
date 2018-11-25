@@ -9,7 +9,7 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-    invisible(gmat::rgbn_chol(N = N , p = p))
+    invisible(gmat::chol_mh(N = N , p = p))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
@@ -26,7 +26,7 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-    invisible(gmat::rgbn_polar(N = N , p = p))
+    invisible(gmat::chol_polar(N = N , p = p))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
