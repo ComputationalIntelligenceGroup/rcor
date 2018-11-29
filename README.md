@@ -42,7 +42,7 @@ and onion methods described by Lewandowski et al. (2009):
 Journal of Multivariate Analysis, 100:9, pp. 1989-2001, 2009.
 
 - For plotting the graphics, it is necessary to have installed the `CRAN`
-  packages `reshape2` and `ggplot2`.
+  packages `dplyr` and `ggplot2`.
 
 ## Usage
 

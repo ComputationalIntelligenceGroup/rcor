@@ -1,4 +1,5 @@
 library("ggplot2")
+library("dplyr")
 
 computeAcceptanceRatios <- function(x){
   N <- dim(x)[1]
@@ -23,9 +24,9 @@ plot_acceptance_3d <- function(N, p, i, eps, h) {
   wd <- getwd()
   dir.create(paste0(wd, "/plot/"), showWarnings = FALSE)
   
-  df <- reshape2::melt(ars)
+  df <- ars %>% as.tbl_cube(met_name = "ars") %>% as_tibble()
 
-  pl <- ggplot(df, aes(x = eps, y = i, z = value)) +
+  pl <- ggplot(df, aes(x = eps, y = i, z = ars)) +
   	geom_contour(aes(colour = ..level..)) +
   	scale_color_gradient(low = "blue", high = "red") +
   	theme(text = element_text(size = 20)) +
@@ -55,10 +56,10 @@ plot_acceptance_k <- function(N, p, i, eps, h) {
   palette <- colorRampPalette(colors = c("black","red"))
   colors <- palette(eps_len)
   
-  df <- reshape2::melt(ars)
+  df <- ars %>% as.tbl_cube(met_name = "ars") %>% as_tibble()
   df$eps <- as.factor(df$eps)
   
-  pl <- ggplot(df, aes(x = i, y = value, group = eps, color = eps)) +
+  pl <- ggplot(df, aes(x = i, y = ars, group = eps, color = eps)) +
   	geom_line() +
   	geom_point() +
   	theme(text = element_text(size = 20), legend.position = "bottom") +
@@ -89,10 +90,10 @@ plot_acceptance_eps <- function(N, p, i, eps, h) {
 	palette <- colorRampPalette(colors = c("black","red"))
 	colors <- palette(length(i))
 	
-	df <- reshape2::melt(ars)
+	df <- ars %>% as.tbl_cube(met_name = "ars") %>% as_tibble()
 	df$i <- as.factor(df$i)
 
-	pl <- ggplot(df, aes(x = eps, y = value, group = i, color = i)) +
+	pl <- ggplot(df, aes(x = eps, y = ars, group = i, color = i)) +
 		geom_line() +
 		geom_point() +
 		theme(text = element_text(size = 20), legend.position = "bottom") +
@@ -124,10 +125,10 @@ plot_time <- function(p, method, fname, dir_name = "res", log = FALSE) {
 	palette <- colorRampPalette(colors = c("black","red"))
 	colors <- palette(length(method))
 	
-	df <- reshape2::melt(res)
+	df <- res %>% as.tbl_cube(met_name = "time") %>% as_tibble()
 	df$method <- as.factor(df$method)
 	
-	pl <- ggplot(df, aes(x = p, y = value, color = method, group = method)) +
+	pl <- ggplot(df, aes(x = p, y = time, color = method, group = method)) +
 		geom_line() +
 		geom_point() +
 		theme(text = element_text(size = 20), legend.position = "bottom") +
