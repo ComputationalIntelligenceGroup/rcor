@@ -24,8 +24,8 @@ package from CRAN as follows
 # install.packages("devtools")
 devtools::install_github("irenecrsn/gmat")
 ```
-Specifically, the function `gmat::rgbn_chol` implements the Metropolis-Hastings
-algorithm described in the Córdoba et al. (2018), while `gmat::rgbn_polar`
+Specifically, the function `gmat::chol_mh` implements the Metropolis-Hastings
+algorithm described in the Córdoba et al. (2018), while `gmat::chol_polar`
 implements the polar parametrization method by Pouhramadi and Wang (2015):
 
 > Pourahmadi, M., Wang, X. Distribution of random correlation matrices:
