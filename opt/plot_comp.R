@@ -43,3 +43,29 @@ pl <- ggplot(df, aes(value, group = method, color = method)) +
 ggsave(filename = "densities_eigen.pdf", plot = pl, device = "pdf", path = "plot",
 			 width = 7, height = 4)
 
+#### compute qube volume inside elliptope in 3 dimensions 
+N <- 10000
+p <- 3
+volume <- matrix(nrow = length(method), ncol = 2, 
+									dimnames = list("method" = method, 
+																	"case" = c("0.4 -- 0.6", "-0.1 -- 0.1")))
+exp_volume <- N * 0.2^3 / volumeElliptope(3)
+for (m in method) {
+	sample <- f_sample[[m]](N, p)
+
+	vec_sample <- apply(sample, MARGIN = 3, function(M) return(M[c(2,3,6)]))
+	
+	## restrict to cube in 0.4 < x < 0.6
+	region <- vec_sample[, vec_sample[1,]<0.6 & vec_sample[1,]>0.4 & 
+											 	vec_sample[2,]<0.6 & vec_sample[2,]>0.4 & vec_sample[3,]<0.6 & vec_sample[3,]>0.4 ]
+	
+	volume[m, 1] <- dim(region)[2]
+	
+	## restrict to cube in -0.1 < x < 0.1
+	region <- vec_sample[, vec_sample[1,]<0.1 & vec_sample[1,]>-0.1 & 
+											 	vec_sample[2,]<0.1 & vec_sample[2,]>-0.1 & vec_sample[3,]<0.1 & vec_sample[3,]>-0.1 ]
+	
+	volume[m, 2] <- dim(region)[2]
+}
+vol <- list("exp" = exp_volume, "res" = volume)
+saveRDS(vol, file = "vol.rds")

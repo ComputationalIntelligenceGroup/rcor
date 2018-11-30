@@ -14,6 +14,8 @@ Computer Science (IDEAL 2018), vol 11314, pp. 117-124, 2018.
 - `plot_utils.R`: utility functions for plotting.
 - `plot.R`: script that generates the plots describing the properties of the
   algorithm, as well as the results of the time experiment.
+- `opt`: folder containing scripts for running additional experiments. __Work in
+  progress__
 
 ## R packages required
 - These scripts rely on the development version of the
