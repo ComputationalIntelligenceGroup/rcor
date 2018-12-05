@@ -49,8 +49,8 @@ Journal of Multivariate Analysis, 100:9, pp. 1989-2001, 2009.
 ## Usage
 
 ```bash
-	Rscript time_experiment.R
-	Rscript plot.R
+Rscript time_experiment.R
+Rscript plot.R
 ```
 The time experiment can be computationally intensive.
 
