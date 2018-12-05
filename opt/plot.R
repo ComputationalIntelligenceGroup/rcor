@@ -74,3 +74,51 @@ for (k1 in k) {
 }
 dev.off()
 
+## 3D plots
+##generate pallette
+col <- brewer.pal(9, "Greys")
+pallette <- colorRampPalette(col)
+N <- 10000
+dag <- gmat::rgraph(p = 4, d = 0.6, dag = TRUE)
+plot(dag)
+sam <- gmat::chol_mh(N = N, dag = dag)
+sam <- gmat::vectorize(sam)
+plotSample3D(sam[,c(2,3,5)],pallette = pallette, sort.fun = function(t) return(t[1]))
+
+plot(sam[,c(2,3)],asp=1)
+hist(sam[,1],freq = F)
+
+sort(sam[,1],index.return =T) ->sorted
+index <- 1:N
+index <- sorted$ix
+plot3d(sam[index,], col = pallette(N),
+        xlab = "v1", ylab="v2", zlab = "v3")
+
+########## unif iid
+sam_iid <- gmat::rgbn_iid(N = N, p = 3, dag = dag, return.minvector = TRUE)
+plot3d(x = sam_iid[,1], y = sam_iid[,2], z = sam_iid[,3]) 
+plotSample3D(sam_iid,pallette = pallette, sort.fun = function(t) return(t[1]))
+
+col <- brewer.pal(9, "Greens")
+pallette <- colorRampPalette(col)
+sam <- gmat::mh_row(N = N, p = 3, i = 8, eps = 0.1, h = 10000)
+plotSample3D(sam[,]*1.005, pallette = pallette, sort.fun = function(t) return(t[1]),
+             type="p",aspect=F, size=8, add=T, point_antialias = T)
+
+### non saturated model
+N <- 10000
+dag2 <- gmat::rgraph(p = 4, d = 0.6, dag = TRUE)
+plot(dag2)
+
+sam <- gmat::chol_mh(N = N, dag = dag2)
+sam <- gmat::vectorize(sam)
+sam[1,]
+plot(x = sam[,1], y = sam[,2], asp=1)
+pairs(x = sam[,], lwd = 1 , pch  =20, cex  = 0.3)
+
+sam_iid <- gmat::chol_iid(N = N, p = 3, dag = dag2)
+sam_iid <- gmat::vectorize()
+dim(sam_iid)
+plot(x = sam_iid[,1], y = sam_iid[,2], asp=1) 
+
+
