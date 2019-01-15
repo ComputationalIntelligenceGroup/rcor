@@ -1,5 +1,3 @@
-devtools::install_github("irenecrsn/gmat")
-
 N <- 100
 p <- 50
 

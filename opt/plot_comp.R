@@ -1,6 +1,5 @@
 library("ggplot2")
 source("plot_utils.R")
-devtools::install_github("irenecrsn/gmat")
 
 ronion <- function(N, p) {
 	sample <- array(dim = c(p, p, N))
@@ -27,6 +26,8 @@ f_sample <- c("polar" = gmat::chol_polar, "chol" = rmh,  "onion" = ronion, "vine
 method <- names(f_sample)
 
 #### compute eigenvalues (100 matrices of dimension 50)
+wd <- getwd()
+dir.create(paste0(wd, "/plot"), showWarnings = FALSE)
 eigen_list <- list()
 for (m in method) {
 	sample <- readRDS(paste0("res_comp/", m, ".rds"))

@@ -18,13 +18,10 @@ Computer Science (IDEAL 2018), vol 11314, pp. 117-124, 2018.
   progress__
 
 ## R packages required
-- These scripts rely on the development version of the
-`R` package `gmat`, which can be installed with the `devtools`
-package from CRAN as follows
+- These scripts rely on the `R` package `gmat`, which can be installed from CRAN as follows
 
 ```R
-# install.packages("devtools")
-devtools::install_github("irenecrsn/gmat")
+install.packages("gmat")
 ```
 Specifically, the function `gmat::chol_mh` implements the Metropolis-Hastings
 algorithm described in the Córdoba et al. (2018), while `gmat::chol_polar`

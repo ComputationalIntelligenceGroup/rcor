@@ -16,7 +16,7 @@ plot_acceptance_3d <- function(N, p, i, eps, h) {
   ars <- array(dim = c(length(eps), length(i)), dimnames = list(eps = eps, i = i))
   for (k in 1:length(i)) {
     for (j in 1:length(eps)) {
-    	sam <- gmat::mh_sphere(N = N, p = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
+    	sam <- gmat::mh_sphere(N = N, k = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
     	ars[j, k] <- computeAcceptanceRatios(sam)
     }
   }
@@ -45,7 +45,7 @@ plot_acceptance_k <- function(N, p, i, eps, h) {
   ars <- array(dim = c(length(i), length(eps)), dimnames = list(i = i, eps = eps))
   for (k in 1:length(i)) {
   	for (j in 1:eps_len) {
-  		sam <- gmat::mh_sphere(N = N, p = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
+  		sam <- gmat::mh_sphere(N = N, k = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
   		ars[k, j] <- computeAcceptanceRatios(sam)
   	}
   }
@@ -79,7 +79,7 @@ plot_acceptance_eps <- function(N, p, i, eps, h) {
 	ars <- array(dim = c(length(i), length(eps)), dimnames = list(i = i, eps = eps))
 	for (k in 1:length(i)) {
 		for (j in 1:length(eps)) {
-			sam <- gmat::mh_sphere(N = N, p = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
+			sam <- gmat::mh_sphere(N = N, k = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
 			ars[k, j] <- computeAcceptanceRatios(sam)
 		}
 	}
