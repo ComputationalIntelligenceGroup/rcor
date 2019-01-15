@@ -1,5 +1,3 @@
-devtools::install_github("irenecrsn/gmat")
-
 dir.create("res", showWarnings = FALSE)
 N <- 5000 
 Ps <- c(10*(1:10))
@@ -26,7 +24,8 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-    invisible(gmat::chol_polar(N = N , p = p))
+    invisible(sapply(1:N, FUN = function(n){return(randcorr::randcorr(p = p))},
+	simplify = FALSE, USE.NAMES = FALSE))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
@@ -42,7 +41,9 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-	invisible(sapply(1:N, clusterGeneration::genPositiveDefMat, dim = p, covMethod = "onion", rangeVar = c(1,1)))
+	invisible(sapply(1:N, clusterGeneration::genPositiveDefMat, dim = p,
+	covMethod = "onion", rangeVar = c(1,1), simplify = FALSE, USE.NAMES =
+	FALSE))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N
@@ -59,7 +60,9 @@ for (i in 1:length(Ps)){
     p <- Ps[i]
     results[i, "p"] <- p
     t1 <- Sys.time()
-	invisible(sapply(1:N, clusterGeneration::genPositiveDefMat, dim = p, covMethod = "c-vine", rangeVar = c(1,1)))
+	invisible(sapply(1:N, clusterGeneration::genPositiveDefMat, dim = p,
+	covMethod = "c-vine", rangeVar = c(1,1), simplify = FALSE, USE.NAMES =
+	FALSE))
     t2 <- Sys.time()
     results[i,"elapsed_time"] <- as.numeric(difftime(t2,t1,unit = "sec"))
     results[i,"N"] <- N

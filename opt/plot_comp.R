@@ -18,11 +18,19 @@ rvine <- function(N, p) {
 	return(sample)
 }
 
+rpolar <- function(N, p) {
+	sample <- array(dim = c(p, p, N))
+	for (i in 1:N){
+		sample[, , i] <- randcorr::randcorr(p = p)
+	}
+	return(sample)
+}
+
 rmh <- function(N, p) {
 	return(gmat::chol_mh(N = N, p = p, h = 1000, eps = 0.1))
 }
 
-f_sample <- c("polar" = gmat::chol_polar, "chol" = rmh,  "onion" = ronion, "vine" = rvine)
+f_sample <- c("polar" = rpolar, "chol" = rmh,  "onion" = ronion, "vine" = rvine)
 method <- names(f_sample)
 
 #### compute eigenvalues (100 matrices of dimension 50)
