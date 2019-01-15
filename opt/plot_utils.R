@@ -7,7 +7,7 @@ plot_acceptance_iter <- function(N, p, i, eps, h) {
 	wd <- getwd()
 	dir.create(paste0(wd, "/plot"), showWarnings = FALSE)
 
-	sam <- gmat::mh_row(N = N, p = p - i + 1, i = i, eps = eps, h = h)
+	sam <- gmat::mh_sphere(N = N, k = p - i + 1, i = i, eps = eps, h = h)
 	ars <- sapply(X = 2:N, FUN = function(n) {
 		return(computeAcceptanceRatios(sam[1:n, ]))
 	})
@@ -30,7 +30,7 @@ plot_averages <- function(N, p, i, eps, file_name, n_paths = 5, plot_title) {
 	
 	avgs <- matrix(nrow = n_paths, ncol = N)
 	for (path in 1:n_paths) {
-		sam <- gmat::mh_row(N = N, p = p - i + 1, i = i, eps = eps)
+		sam <- gmat::mh_sphere(N = N, k = p - i + 1, i = i, eps = eps)
 		avgs[path, ] <- sapply(1:N, function(n) {return (mean(sam[1:n, 2]))})
 	}
 
@@ -67,7 +67,7 @@ plot_iterations <- function(N, p, i, eps, h) {
 	for (j in 1:length(eps)) {
 		
 		for (k in 1:length(i)) {
-			sam <- gmat::mh_row(N = N, p = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
+			sam <- gmat::mh_sphere(N = N, k = p - i[k] + 1, i = i[k], eps = eps[j], h = h)
 		
 			df <- data.frame(x = 1:N, y = sam[, 2])
 
@@ -97,7 +97,7 @@ plot_pointwise_3D_second_row <- function(N, eps, h) {
 	
 	for (j in 1:length(eps)) {
 		
-		sam <- gmat::mh_row(N = N, p = p - i + 1, i = i, eps = eps[j], h = h)
+		sam <- gmat::mh_sphere(N = N, k = p - i + 1, i = i, eps = eps[j], h = h)
 			
 		df <- data.frame(x = sam[, 1], y = sam[, 2], Iteration = 1:N)
 			
@@ -128,7 +128,7 @@ plot_pointwise_3D_first_row <- function(N, eps, h) {
 	
 	for (j in 1:length(eps)) {
 		
-		sam <- gmat::mh_row(N = N, p = p - i + 1, i = i, eps = eps[j], h = h)
+		sam <- gmat::mh_sphere(N = N, k = p - i + 1, i = i, eps = eps[j], h = h)
 		
 		df <- data.frame(x = sam[, 1], y = sam[, 2], Iteration = 1:N)
 		
@@ -150,7 +150,7 @@ plot_pointwise_3D_first_row <- function(N, eps, h) {
 
 plot_hist_dens_circle <- function(k = 10, N = 20000, eps = 0.1, h = 1000, title 
                                   = paste0("k = ", k, ", eps = ", eps)) {
-  sample <- gmat::mh_row(N = N, p = 2, i = k, eps = eps, h = h, returnAll = F)
+  sample <- gmat::mh_sphere(N = N, k = 2, i = k, eps = eps, h = h, returnAll = F)
   circularDensityPlot(k = k, newPlot = T, lwd = 3, makeCircle = T, 
                       xaxt='n', ann=FALSE, yaxt = 'n', bty="n" , col = "black",lty  = 6 )
   title(title)
