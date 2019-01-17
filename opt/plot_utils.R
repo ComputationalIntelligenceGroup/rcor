@@ -147,118 +147,6 @@ plot_pointwise_3D_first_row <- function(N, eps, h) {
 	dev.off()
 }
 
-
-plot_hist_dens_circle <- function(k = 10, N = 20000, eps = 0.1, h = 1000, title 
-                                  = paste0("k = ", k, ", eps = ", eps)) {
-  sample <- gmat::mh_sphere(N = N, k = 2, i = k, eps = eps, h = h, returnAll = F)
-  circularDensityPlot(k = k, newPlot = T, lwd = 3, makeCircle = T, 
-                      xaxt='n', ann=FALSE, yaxt = 'n', bty="n" , col = "black",lty  = 6 )
-  title(title)
-  circularHistogram(sample, makeCircle = F, newPlot = F, lwd = 1, breaks = "FD")
-  ## plotting some references
-  lines(c(0,0),c(-2,2), lwd=2)
-  #text(x = -0.2, y = 0, "(0,0)")
-  lines(c(0,1),c(0,0),lwd = 2)
-}
-
-
-#' plot density on circle
-#' 
-#' @example 
-#'   circularDensityPlot(newPlot = T, makeCircle = T, k=10, norm=T)
-#'   sapply(9:1, circularDensityPlot, norm=TRUE)
-
-circularDensityPlot <- function(k = 1, fdens = function(th) return(cos(th)^k),  
-                                norm = TRUE,  from = -pi/2, to = pi/2, by=0.03,
-                                makeCircle=FALSE, newPlot=FALSE, col="red",...){
-  gth <- seq(from = from , to = to, by = by)
-  c <- cos(gth)
-  s <- sin(gth)
-  if (norm){
-    if (k %% 2 == 0) { # even k
-      l <- 1:(k/2)
-      const <- pi*prod((2*l - 1)/(2*l))
-    } else {
-      if (k == 1) {
-        const <- 2
-      } else {
-        l <- 1:((k - 1)/2)
-        const <- 2*prod((2*l)/(2*l + 1))
-      }
-    }
-  }else{
-    const <- 1
-  }
-  f <- sapply(gth, fdens) / const
-  if (newPlot){
-    plot(c+f*c,s+f*s,col=col,type="l",asp=1,...)
-  }else{
-    lines(c+f*c,s+f*s,col=col,type="l",asp=1,...)
-  }
-  if (makeCircle){
-    lines(c,s,type="l",asp=1, ...)
-  }
-}
-
-
-#' plot a unit circle
-plotCircle <- function(from = -pi/2, to = pi/2, by = 0.01, newPlot = TRUE, type = "l", ... ){
-  gth <- seq(from,to,by)
-  if (newPlot){
-    plot(cos(gth),sin(gth), type = type, asp=1, ...)
-  }else{
-    lines(cos(gth),sin(gth),type = type, asp=1,...)
-  }
-  
-}
-
-
-#' plot a circular histogram
-circularHistogram <- function(x, y = NULL, makeCircle = TRUE, newPlot = FALSE,
-                              breaks = "Sturges" , ...){
-  if (!is.null(dim(x))){
-    if (length(dim(x)) > 1){
-      if (dim(x)[2] == 1){
-        x <- as.numeric(x)
-      }else{
-        x <- atan2(x[,2],x[,1])
-      }
-    }else{
-      x <- as.numeric(x)
-    }
-  }else if (!is.null(y)){ # we interpret x,y as cartesian coordinates
-    x <- atan2(y, x)
-  } else{ #otherwise x is intepreted as angular values
-    #do nada 
-  }
-  H <- hist(x , plot = F, breaks = breaks)
-  cbreaks <- cos(H$breaks)
-  sbreaks <- sin(H$breaks)
-  gth <- seq(from = H$breaks[1] , to = H$breaks[length(H$breaks)], by = 0.01)
-  c <- cos(gth)
-  s <- sin(gth)
-  if (newPlot){
-    if (makeCircle){
-      plot(c,s,type="l",asp=1, ...)
-    }else{
-      plot(c,s,type="l",asp=1, col="white", ...)
-    }    
-  }else{
-    if (makeCircle){
-      lines(c,s,type="l",asp=1, ...)
-    }
-  }
-  for (j in 1:(length(H$breaks)-1)){
-    lines(c(cbreaks[j], cbreaks[j]*(1+H$density[j])),
-          c(sbreaks[j],sbreaks[j]*(1+H$density[j])) , ... )
-    lines(c(cbreaks[j+1], cbreaks[j+1]*(1+H$density[j])),
-          c(sbreaks[j+1],sbreaks[j+1]*(1+H$density[j])) , ... )
-    lines(cbreaks[c(j,j+1)]*(1+H$density[j]),sbreaks[c(j,j+1)]*(1+H$density[j]), ...)
-    
-  }
-  
-}
-
 ##' sub sample 
 ##' 
 ##' @param x data row=observation, column = variables
@@ -270,14 +158,6 @@ subSample <- function(x, bounds){
     x <- x[x[,i]>= bounds[1,i],]
     x <-  x[x[,i]<= bounds[2,i],]
   }
-  # x <- t(apply(x, MARGIN = 1, function(t){
-  #   if (all(t>= bounds[1,]) && all(t<=bounds[2,]) ){
-  #     return(t)
-  #   }else{
-  #     return(rep(NA,length(t)))
-  #   }
-  # }) )
-  # x <- x[!is.na(x[,1]),]
   return(x)
 }
 
