@@ -37,8 +37,10 @@ method <- names(f_sample)
 wd <- getwd()
 dir.create(paste0(wd, "/plot"), showWarnings = FALSE)
 eigen_list <- list()
+N <- 100
+p <- 50
 for (m in method) {
-	sample <- readRDS(paste0("res_comp/", m, ".rds"))
+	sample <- f_sample[[m]](N, p)
 	
 	eigen_list[[m]] <- apply(sample, MARGIN = 3, function(M) return(eigen(M)$values))
 }
