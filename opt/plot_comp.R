@@ -1,35 +1,6 @@
 library("ggplot2")
 source("plot_utils.R")
 
-ronion <- function(N, p) {
-	sample <- array(dim = c(p, p, N))
-	for (i in 1:N){
-		sample[, , i] <- clusterGeneration::genPositiveDefMat(dim = p, rangeVar = c(1,1),
-																													covMethod  ="onion")$Sigma
-	}
-	return(sample)
-}
-rvine <- function(N, p) {
-	sample <- array(dim = c(p, p, N))
-	for (i in 1:N){
-		sample[, , i] <- clusterGeneration::genPositiveDefMat(dim = p, rangeVar = c(1,1),
-																														covMethod  ="c-vine")$Sigma
-	}
-	return(sample)
-}
-
-rpolar <- function(N, p) {
-	sample <- array(dim = c(p, p, N))
-	for (i in 1:N){
-		sample[, , i] <- randcorr::randcorr(p = p)
-	}
-	return(sample)
-}
-
-rmh <- function(N, p) {
-	return(gmat::chol_mh(N = N, p = p, h = 1000, eps = 0.1))
-}
-
 f_sample <- c("polar" = rpolar, "chol" = rmh,  "onion" = ronion, "vine" = rvine)
 method <- names(f_sample)
 
@@ -59,11 +30,12 @@ N <- 10000
 p <- 3
 f_sample <- c("polar" = rpolar, "chol" = rmh,  "onion" = ronion, "vine" = rvine)
 method <- names(f_sample)
-volume <- matrix(data = 0, nrow = length(method), ncol = 1, 
-									dimnames = list("method" = method, 
-																	"case" = c("-0.1 -- 0.1")))
 exp_volume <- N * 0.2^3 / vol_elliptope(n = 3)
 rep <- 50
+
+volume <- matrix(data = 0, nrow = length(method), ncol = 1, 
+								 dimnames = list("method" = method, 
+								 								"case" = c("-0.1 -- 0.1")))
 for (m in method) {
 	for (r in 1:rep) {
 		sample <- f_sample[[m]](N, p)
@@ -78,6 +50,5 @@ for (m in method) {
 vol <- list("exp" = exp_volume, "res" = volume)
 saveRDS(vol, file = "vol.rds")
 
-sample <- rmh(N = 10000, p = 3)
-sample <- gmat::vectorize(sample)
-plot_elliptope(x = sample)
+
+

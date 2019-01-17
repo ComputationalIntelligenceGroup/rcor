@@ -2,6 +2,36 @@ library("RColorBrewer")
 library("reshape2")
 library("ggplot2")
 
+ronion <- function(N, p) {
+	sample <- array(dim = c(p, p, N))
+	for (i in 1:N){
+		sample[, , i] <- clusterGeneration::genPositiveDefMat(dim = p, rangeVar = c(1,1),
+																													covMethod  ="onion")$Sigma
+	}
+	return(sample)
+}
+rvine <- function(N, p) {
+	sample <- array(dim = c(p, p, N))
+	for (i in 1:N){
+		sample[, , i] <- clusterGeneration::genPositiveDefMat(dim = p, rangeVar = c(1,1),
+																													covMethod  ="c-vine")$Sigma
+	}
+	return(sample)
+}
+
+rpolar <- function(N, p) {
+	sample <- array(dim = c(p, p, N))
+	for (i in 1:N){
+		sample[, , i] <- randcorr::randcorr(p = p)
+	}
+	return(sample)
+}
+
+rmh <- function(N, p, ...) {
+	return(gmat::chol_mh(N = N, p = p, ...))
+}
+
+
 plot_acceptance_iter <- function(N, p, i, eps, h) {
 
 	wd <- getwd()
@@ -159,11 +189,7 @@ sub_sample <- function(x, bounds){
   for (i in 1:p) {
     x <- x[x[, i] > bounds[1] & x[, i] < bounds[2], ]
   }
-	if (is.null(x)) {
-		return(matrix(nrow = 0, ncol = p))
-	} else {
-		return(x)
-	}
+	return(x)
 }
 
 plot_elliptope <- function(x, bounds = NULL,
