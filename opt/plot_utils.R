@@ -307,11 +307,7 @@ plotSample3D <- function(x, bounds = NULL,
   
 }
 
-
-volumeQube <- function(bounds){
-	return(prod(apply(bounds, MARGIN = 2, function(b) return(abs(b[1]-b[2])))))
-} 
-volumeElliptope <- function(n){
+vol_elliptope <- function(n){
 	if (n %% 2 == 0){
 		num <- 2^((3 * n ^ 2 - 4 * n) / 4) * (gamma(n/2)) ^ n * prod(gamma(2 * (1 : ((n - 2) / 2))))
 		den <- (gamma(n))^(n - 1)
