@@ -65,10 +65,9 @@ for (m in method) {
 		sample <- f_sample[[m]](N, p)
 		sample <- gmat::vectorize(sample)
 
-		region <- sample[sample[,1]<0.1 & sample[,1]>-0.1 & 
-											 	sample[,2]<0.1 & sample[,2]>-0.1 & sample[,3]<0.1 & sample[,3]>-0.1, ]
+		region <- sub_sample(x = sample, bounds = c(-0.1, 0.1))
 	
-		volume[m, 1] <- volume[m, 1] +  dim(region)[1]
+		volume[m, 1] <- volume[m, 1] + nrow(region)
 	}
 	volume[m, ] <- volume[m, ] / rep
 }

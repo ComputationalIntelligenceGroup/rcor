@@ -150,24 +150,22 @@ plot_pointwise_3D_first_row <- function(N, eps, h) {
 ##' sub sample 
 ##' 
 ##' @param x data row=observation, column = variables
-##' @param bounds data.frame of bounding, same column as x and two row
-##'               bounds[1,] contains the inferior limits
-##'               bounds[2,] contains the upper limits
-subSample <- function(x, bounds){
-  for (i in 1:(dim(x)[2])){
-    x <- x[x[,i]>= bounds[1,i],]
-    x <-  x[x[,i]<= bounds[2,i],]
+##' @param bounds vector of bounding,
+##'               bounds[1] contains the inferior limits
+##'               bounds[2] contains the upper limits
+sub_sample <- function(x, bounds){
+  for (i in 1:ncol(x)) {
+    x <- x[x[, i] > bounds[1] & x[, i] < bounds[2], ]
   }
   return(x)
 }
 
-### 3D plot ellittope
-plotSample3D <- function(x, bounds = NULL,
+plot_elliptope <- function(x, bounds = NULL,
                          sort.fun = function(v){ return(sum(v^2))}, col = "red",
                          pallette =  colorRampPalette(c("red","blue")), file=NULL,... ){
   N <- dim(x)[1]
   if (!is.null(bounds)){
-    x <- subSample(x = x, bounds  = bounds)
+    x <- sub_sample(x = x, bounds  = bounds)
   }
   if (is.function(sort.fun)){
     idx <- sort(apply(x, MARGIN = 1,FUN = sort.fun), index.return  = TRUE)$ix
@@ -198,29 +196,4 @@ vol_elliptope <- function(n){
 		return(pi ^ ((n ^ 2 - 1) / 4) * num/den)
 	}
 }
-
-plotSample3D <- function(x, bounds = NULL,
-                         sort.fun = function(v){ return(sum(v^2))}, col = "red",
-                         pallette =  colorRampPalette(c("red","blue")), file=NULL,... ){
-  N <- dim(x)[1]
-  if (!is.null(bounds)){
-    x <- subSample(x = x, bounds  = bounds)
-  }
-  if (is.function(sort.fun)){
-    idx <- sort(apply(x, MARGIN = 1,FUN = sort.fun), index.return  = TRUE)$ix
-  }else{
-    idx <- 1:N
-  }
-  if (is.function(pallette)){
-    col = pallette(N)
-  }else{
-    col = col
-  }
-  rgl::plot3d(x[,], col = col,
-              xlab = "v1", ylab="v2", zlab = "v3",...)
-  if (is.character(file)){
-    rgl.postscript(file,fmt = "pdf")
-  }
-}
-
 
