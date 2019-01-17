@@ -1,8 +1,11 @@
 N <- 100
 p <- 50
 
-sample_polar <- gmat::chol_polar(N = N, p = p)
 sample_mh <- gmat::chol_mh(N = N, p = p, h=1000, eps = 0.1)
+sample_polar <- array(dim = dim(sample_mh))
+for (i in 1:N) {
+	sample_polar[, , i] <- randcorr::randcorr(p = p)
+}
 sample_onion <- array(dim=dim(sample_mh))
 for (i in 1:N){
  sample_onion[,,i] <- clusterGeneration::genPositiveDefMat(dim = p, rangeVar = c(1,1), 
