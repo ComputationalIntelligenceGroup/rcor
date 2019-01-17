@@ -55,6 +55,8 @@ ggsave(filename = "densities_eigen.pdf", plot = pl, device = "pdf", path = "plot
 #### compute qube volume inside elliptope in 3 dimensions 
 N <- 10000
 p <- 3
+f_sample <- c("polar" = rpolar, "chol" = rmh,  "onion" = ronion, "vine" = rvine)
+method <- names(f_sample)
 volume <- matrix(data = 0, nrow = length(method), ncol = 1, 
 									dimnames = list("method" = method, 
 																	"case" = c("-0.1 -- 0.1")))
@@ -73,3 +75,7 @@ for (m in method) {
 }
 vol <- list("exp" = exp_volume, "res" = volume)
 saveRDS(vol, file = "vol.rds")
+
+sample <- rmh(N = 10000, p = 3)
+sample <- gmat::vectorize(sample)
+plot_elliptope(x = sample)

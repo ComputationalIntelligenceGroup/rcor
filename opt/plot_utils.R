@@ -154,21 +154,27 @@ plot_pointwise_3D_first_row <- function(N, eps, h) {
 ##'               bounds[1] contains the inferior limits
 ##'               bounds[2] contains the upper limits
 sub_sample <- function(x, bounds){
-  for (i in 1:ncol(x)) {
+	
+	p <- ncol(x)
+  for (i in 1:p) {
     x <- x[x[, i] > bounds[1] & x[, i] < bounds[2], ]
   }
-  return(x)
+	if (is.null(x)) {
+		return(matrix(nrow = 0, ncol = p))
+	} else {
+		return(x)
+	}
 }
 
 plot_elliptope <- function(x, bounds = NULL,
                          sort.fun = function(v){ return(sum(v^2))}, col = "red",
                          pallette =  colorRampPalette(c("red","blue")), file=NULL,... ){
-  N <- dim(x)[1]
+  N <- nrow(x)
   if (!is.null(bounds)){
     x <- sub_sample(x = x, bounds  = bounds)
   }
   if (is.function(sort.fun)){
-    idx <- sort(apply(x, MARGIN = 1,FUN = sort.fun), index.return  = TRUE)$ix
+    idx <- sort(apply(x, MARGIN = 1, FUN = sort.fun), index.return  = TRUE)$ix
   }else{
     idx <- 1:N
   }
@@ -177,8 +183,8 @@ plot_elliptope <- function(x, bounds = NULL,
   }else{
     col = col
   }
-  rgl::plot3d(x[,], col = col,
-              xlab = "v1", ylab="v2", zlab = "v3",...)
+  rgl::plot3d(x, col = col,
+              xlab = "x", ylab="y", zlab = "z",...)
   if (is.character(file)){
     rgl.postscript(file,fmt = "pdf")
   }
