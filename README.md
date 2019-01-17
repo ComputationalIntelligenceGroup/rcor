@@ -8,7 +8,8 @@ Metropolis-Hastings method for generating random correlation matrices. Lecture N
 Computer Science (IDEAL 2018), vol 11314, pp. 117-124, 2018. 
 
 Note that the time results described in the above paper may vary since we now
-use package `randcorr` for the polar method, now significantly improved.
+use package `randcorr` for the polar parametrization, which is now computationally
+competitive with the rest of the compared methods.
 
 ## Contents
 
