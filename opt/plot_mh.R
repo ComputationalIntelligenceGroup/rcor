@@ -24,32 +24,4 @@ plot_iterations(N = N, p = p, i = i, eps = eps, h = h)
 #### plotting behaviour of sample pointwise
 plot_pointwise_3D_second_row(N = N, eps = eps, h = h)
 
-### plotting elliptope with different methods
-N <- 10000; p <- 3
-devtools::load_all("../../gmat")
-sample <- rmh(N = N, p = p, h = 1000, eps = 0.5)
-sample <- gmat::vectorize(sample)
-plot_elliptope(x = sample)
-pairs(x = sample, lwd = 1 , pch  =20, cex  = 0.3, asp = 1, labels = c("x", "y", "z"))
-
-devtools::unload("gmat")
-sample <- rmh(N = N, p = p, h = 1000, eps = 0.5)
-sample <- gmat::vectorize(sample)
-plot_elliptope(x = sample)
-pairs(x = sample, lwd = 1 , pch  =20, cex  = 0.3, asp = 1, labels = c("x", "y", "z"))
-
-sample <- rpolar(N = N, p = p)
-sample <- gmat::vectorize(sample)
-plot_elliptope(x = sample)
-pairs(x = sample, lwd = 1 , pch  =20, cex  = 0.3, asp = 1, labels = c("x", "y", "z"))
-
-sample <- ronion(N = N, p = p)
-sample <- gmat::vectorize(sample)
-plot_elliptope(x = sample)
-pairs(x = sample, lwd = 1 , pch  =20, cex  = 0.3, asp = 1, labels = c("x", "y", "z"))
-
-sample <- gmat::chol_iid(N = N, p = p)
-sample <- gmat::vectorize(sample)
-plot_elliptope(sample)
-pairs(x = sample, lwd = 1 , pch  =20, cex  = 0.3, asp = 1, labels = c("x", "y", "z"))
 
