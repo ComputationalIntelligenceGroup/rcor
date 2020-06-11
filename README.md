@@ -18,8 +18,7 @@ competitive with the rest of the compared methods.
 - `plot_utils.R`: utility functions for plotting.
 - `plot.R`: script that generates the plots describing the properties of the
   algorithm, as well as the results of the time experiment.
-- `opt`: folder containing scripts for running additional experiments. __Work in
-  progress__
+- `plot_comp.R`: optional script for generating additional comparison results.
 
 ## R packages required
 
