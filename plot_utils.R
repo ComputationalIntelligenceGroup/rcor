@@ -30,6 +30,7 @@ plot_acceptance_3d <- function(N, p, i, eps, h) {
   	geom_contour(aes(colour = ..level..)) +
   	scale_color_gradient(low = "blue", high = "red") +
   	theme(text = element_text(size = 20)) +
+	theme_bw() +
   	xlab("Perturbation variance") +
   	ylab("Row number") +
   	ggtitle("Contour plot of the acceptance ratio surface")
@@ -63,6 +64,7 @@ plot_acceptance_k <- function(N, p, i, eps, h) {
   	geom_line() +
   	geom_point() +
   	theme(text = element_text(size = 20), legend.position = "bottom") +
+	theme_bw() +
   	scale_color_manual(values = colors) +
   	xlab("Row number") +
   	ylab("Acceptance ratio") +
@@ -97,6 +99,7 @@ plot_acceptance_eps <- function(N, p, i, eps, h) {
 		geom_line() +
 		geom_point() +
 		theme(text = element_text(size = 20), legend.position = "bottom") +
+		theme_bw() +
 		scale_color_manual(values = colors) +
 		xlab("Perturbation variance") +
 		ylab("Acceptance ratio") +
@@ -132,6 +135,7 @@ plot_time <- function(p, method, fname, dir_name = "res", log = FALSE) {
 		geom_line() +
 		geom_point() +
 		theme(text = element_text(size = 20), legend.position = "bottom") +
+		theme_bw() +
 		xlab("Number of nodes") +
 		ylab("Time in seconds") +
 		scale_color_manual(values = colors)
