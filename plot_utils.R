@@ -29,8 +29,8 @@ plot_acceptance_3d <- function(N, p, i, eps, h) {
   pl <- ggplot(df, aes(x = eps, y = i, z = ars)) +
   	geom_contour(aes(colour = ..level..)) +
   	scale_color_gradient(low = "blue", high = "red") +
-  	theme(text = element_text(size = 20)) +
 	theme_bw() +
+  	theme(text = element_text(size = 20)) +
   	xlab("Perturbation variance") +
   	ylab("Row number") +
   	ggtitle("Contour plot of the acceptance ratio surface")
@@ -63,8 +63,8 @@ plot_acceptance_k <- function(N, p, i, eps, h) {
   pl <- ggplot(df, aes(x = i, y = ars, group = eps, color = eps)) +
   	geom_line() +
   	geom_point() +
-  	theme(text = element_text(size = 20), legend.position = "bottom") +
 	theme_bw() +
+  	theme(text = element_text(size = 20), legend.position = "bottom") +
   	scale_color_manual(values = colors) +
   	xlab("Row number") +
   	ylab("Acceptance ratio") +
@@ -98,8 +98,8 @@ plot_acceptance_eps <- function(N, p, i, eps, h) {
 	pl <- ggplot(df, aes(x = eps, y = ars, group = i, color = i)) +
 		geom_line() +
 		geom_point() +
-		theme(text = element_text(size = 20), legend.position = "bottom") +
 		theme_bw() +
+		theme(text = element_text(size = 20), legend.position = "bottom") +
 		scale_color_manual(values = colors) +
 		xlab("Perturbation variance") +
 		ylab("Acceptance ratio") +
@@ -134,8 +134,8 @@ plot_time <- function(p, method, fname, dir_name = "res", log = FALSE) {
 	pl <- ggplot(df, aes(x = p, y = time, color = method, group = method)) +
 		geom_line() +
 		geom_point() +
-		theme(text = element_text(size = 20), legend.position = "bottom") +
 		theme_bw() +
+		theme(text = element_text(size = 20), legend.position = "bottom") +
 		xlab("Number of nodes") +
 		ylab("Time in seconds") +
 		scale_color_manual(values = colors)
